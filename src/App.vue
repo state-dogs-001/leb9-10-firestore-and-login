@@ -1,32 +1,45 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-app-bar app color="light" dark>
+      <div class="d-flex align-center">
+        <h3>
+          IMPOSSIBLE HOTEL
+        </h3>
+      </div>
+      <v-spacer />
+      <v-btn color="success" class="mr-2" to="/log">Log In</v-btn>
+      <v-btn color="error" @click="logout">Log Out</v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <router-view class="mb-10" />
+    </v-main>
+
+    <v-footer padless dark color="light">
+      <v-col class="text-center" cols="12">
+        {{ new Date().getFullYear() }} — <strong>Impossible Hotel</strong>
+      </v-col>
+    </v-footer>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<script>
+import { auth } from "@/plugins/firebaseConfig.js";
+export default {
+  name: "App",
+  data: () => ({}),
+  methods: {
+    logout() {
+      auth
+        .signOut()
+        .then(() => {
+          alert("Your ID is Sign Out");
+        })
+        .catch(error => {
+          console.log(error);
+          alert("Something was wrong!");
+        });
+    }
+  }
+};
+</script>
